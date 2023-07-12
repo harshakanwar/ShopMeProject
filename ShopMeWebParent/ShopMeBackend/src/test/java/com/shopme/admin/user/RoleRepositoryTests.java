@@ -19,14 +19,15 @@ public class RoleRepositoryTests {
     private RoleRepository repo;
 
     @Test
-    public void testCreatedFirstRole(){
+    public void testCreatedFirstRole() {
 
-        Role roleAdmin = new Role( "Admin","Manage Everything");
+        Role roleAdmin = new Role("Admin", "Manage Everything");
         Role savedRole = repo.save(roleAdmin);
         Assertions.assertThat(savedRole.getId()).isGreaterThan(0);
     }
+
     @Test
-    public void testCreatRestRole(){
+    public void testCreatRestRole() {
 
         Role roleSalesperson = new Role("Salesperson", "manage product price, "
                 + "customers, shipping, orders and sales report");

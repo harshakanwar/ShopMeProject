@@ -10,9 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import java.util.List;
-import java.util.Optional;
-
 @DataJpaTest
 @Rollback(value = false)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -23,43 +20,47 @@ public class UserRepositoryTests {
 
     @Autowired
     private TestEntityManager entityManager;
-    @Test
-    public void testCreateUserWithOneRole(){
 
-        Role role = entityManager.find(Role.class,1);
-        User user = new User( "harsha@gmail.com","harsha2023","Harsha","Kanwar");
+    @Test
+    public void testCreateUserWithOneRole() {
+
+        Role role = entityManager.find(Role.class, 1);
+        User user = new User("harsha@gmail.com", "harsha2023", "Harsha", "Kanwar");
         user.addRole(role);
 
         User savedUser = repo.save(user);
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
     }
-    @Test
-    public void testCreateUserWithTwoRoles(){
 
-        User userGaje = new User( "gaje@gmail.com","gaje2023","Gajesingh","Bhati");
-        userGaje.addRole(new Role(3));
-        userGaje.addRole(new Role(5));
+    @Test
+    public void testCreateUserWithTwoRoles() {
+
+        User userGaje = new User("pallu@gmail.com", "pallu2023", "Priyanka", "Kanwar");
+        userGaje.addRole(new Role(2));
+        userGaje.addRole(new Role(4));
 
         User savedUser = repo.save(userGaje);
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
     }
 
     @Test
-    public void testListAllUsers(){
+    public void testListAllUsers() {
 
         Iterable<User> listUsers = repo.findAll();
         listUsers.forEach(user -> System.out.println(user));
 
     }
+
     @Test
-    public void testGetUserById(){
+    public void testGetUserById() {
 
         User user = repo.findById(1).get();
         System.out.println(user);
         Assertions.assertThat(user).isNotNull();
     }
+
     @Test
-    public void testUpdateUserDetails(){
+    public void testUpdateUserDetails() {
 
         User user = repo.findById(1).get();
         user.setEnabled(true);
@@ -69,7 +70,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void testUpdateUserRoles(){
+    public void testUpdateUserRoles() {
 
         User userGaje = repo.findById(2).get();
         Role roleEditor = new Role(3);
@@ -81,7 +82,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void testDeleteUser(){
+    public void testDeleteUser() {
 
         Integer userId = 2;
         repo.deleteById(userId);
