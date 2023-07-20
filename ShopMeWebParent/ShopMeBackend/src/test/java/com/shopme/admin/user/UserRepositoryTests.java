@@ -24,8 +24,8 @@ public class UserRepositoryTests {
     @Test
     public void testCreateUserWithOneRole() {
 
-        Role role = entityManager.find(Role.class, 1);
-        User user = new User("harsha@gmail.com", "harsha2023", "Harsha", "Kanwar");
+        Role role = entityManager.find(Role.class, 5);
+        User user = new User("test@gmail.com", "test023", "Test", "User");
         user.addRole(role);
 
         User savedUser = repo.save(user);
@@ -94,5 +94,20 @@ public class UserRepositoryTests {
         String email = "harsha@gmail.com";
         User user = repo.getByEmail(email);
         Assertions.assertThat(user).isNotNull();
+    }
+
+    @Test
+    public void testCountById() {
+        Integer id = 1;
+        Long countById = repo.countById(id);
+
+        Assertions.assertThat(countById).isNotNull().isGreaterThan(0);
+    }
+
+    @Test
+    public void disableUserById() {
+        Integer id = 19;
+        repo.updateEnabledStatus(id, true);
+
     }
 }
