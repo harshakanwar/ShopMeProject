@@ -63,6 +63,7 @@
         <h2>Manage Users | [[${pageTitle}]]</h2>
     </div>
     <form th:action="@{/users/save}" method="post" style="max-width:700px; margin: 0 auto"
+          enctype="multipart/form-data"
           th:object="${user}" onsubmit="return checkEmailUnique(this);">
         <input type="hidden" th:field="*{id}">
         <div class="border border-secondary rounded p-3">
@@ -118,9 +119,10 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Photo:</label>
                 <div class="col-sm-8 img">
-                    <input type="file" id="fileImage" accept="image/png image/jpeg"
+                    <input type="hidden" th:field="*{photos}">
+                    <input type="file" id="fileImage" name="image" accept="image/png image/jpeg"
                            class="mb-2"/>
-                    <img id="thumbnail" alt="Photos Preview" th:src="@{/images/default-user.png}"
+                    <img id="thumbnail" alt="Photos Preview" th:src="@{${user.photosImagePath}}"
                          class="img-fluid"/>
                 </div>
             </div>
@@ -161,7 +163,17 @@
       });
 
       $("#fileImage").change(function(){
+       fileSize = this.files[0].size;
+
+       if(fileSize > 1048576)
+       {
+       this.setCustomValidity("You must choose an image less than 1 MB !");
+       this.reportValidity();
+       }
+       else{
+       this.setCustomValidity("");
        showImageThumbnail(this);
+       }
       });
     });
 
@@ -199,6 +211,7 @@
               $("#modalDialog").modal();
     }
     }
+
 
 
 </script>
