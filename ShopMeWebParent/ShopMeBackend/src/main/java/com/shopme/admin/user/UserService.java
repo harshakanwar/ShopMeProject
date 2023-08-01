@@ -4,6 +4,10 @@ import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,7 @@ import java.util.NoSuchElementException;
 @Transactional
 public class UserService {
 
+    public static final int USERS_PER_PAGE = 5;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -24,6 +29,18 @@ public class UserService {
 
     public List<User> listAll() {
         return (List<User>) userRepository.findAll();
+    }
+
+    public Page<User> listByPage(int pageNumber, String sortField, String sortDir, String keyword) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, USERS_PER_PAGE, sort);
+        if (keyword != null) {
+            System.out.println("Hi there " + keyword);
+            return userRepository.findAll(keyword, pageable);
+        }
+        return userRepository.findAll(pageable);
     }
 
     public List<Role> listRoles() {

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.5] - 1 August 2023
+
+### Added
+* Video-42 Code Refactor #1
+
 ## [0.0.4] - 27 July 2023
 
 ### Added
