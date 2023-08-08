@@ -14,14 +14,14 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends PagingAndSortingRepository<User, Integer>, CrudRepository<User, Integer> {
 
     @Query("SELECT u from User u WHERE u.email = :email")
-    public User getByEmail(@Param("email") String email);
+    User getByEmail(@Param("email") String email);
 
-    public Long countById(Integer id);
+    Long countById(Integer id);
 
     @Query("SELECT u from User u WHERE CONCAT(u.id,' ',u.firstName,' ',u.lastName,' ',u.email) LIKE %?1% ")
-    public Page<User> findAll(String keyword, Pageable pageable);
+    Page<User> findAll(String keyword, Pageable pageable);
 
     @Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")
     @Modifying
-    public void updateEnabledStatus(Integer id, boolean enabled);
+    void updateEnabledStatus(Integer id, boolean enabled);
 }

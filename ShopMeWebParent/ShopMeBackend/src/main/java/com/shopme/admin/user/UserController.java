@@ -3,6 +3,7 @@ package com.shopme.admin.user;
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -135,6 +136,33 @@ public class UserController {
         String message = "The User with Id " + id + " has been " + status;
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/users";
+
+    }
+
+    @GetMapping("/users/export/csv")
+    public void exportToCsv(HttpServletResponse httpServletResponse) throws IOException {
+
+        List<User> listUsers = userService.listAll();
+        UserCsvExporter exporter = new UserCsvExporter();
+        exporter.export(listUsers, httpServletResponse);
+
+    }
+
+    @GetMapping("/users/export/excel")
+    public void exportToExcel(HttpServletResponse httpServletResponse) throws IOException {
+
+        List<User> listUsers = userService.listAll();
+        UserExcelExporter exporter = new UserExcelExporter();
+        exporter.export(listUsers, httpServletResponse);
+
+    }
+
+    @GetMapping("/users/export/pdf")
+    public void exportToPDF(HttpServletResponse httpServletResponse) throws IOException {
+
+        List<User> listUsers = userService.listAll();
+        UserPDFExporter exporter = new UserPDFExporter();
+        exporter.export(listUsers, httpServletResponse);
 
     }
 }

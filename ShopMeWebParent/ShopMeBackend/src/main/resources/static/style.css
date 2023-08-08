@@ -2,3 +2,24 @@
 *.icon-silver{color: silver}
 *.icon-green{color: green}
 *.icon-dark{color: gray}
+
+@media screen and (max-width : 768px){
+   /* SMALL SCREEN*/
+
+   div.Full-details {display: none}
+   div.Less-details {display: block; }
+
+}
+@media screen and (min-width : 768px) and (max-width : 1024px){
+   /* MEDIUM SCREEN*/
+   div.Full-details {display: block; }
+   div.Less-details {display: none }
+   .hideable-column {display: none }
+
+}
+@media screen and (min-width : 1024px){
+   /* LARGE SCREEN*/
+   div.Less-details {display: none }
+   .hideable-column {display: table-cell; }
+
+}

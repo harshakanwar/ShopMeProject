@@ -13,7 +13,7 @@
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<th th:fragment="column_link(fieldName,columnLabel)">
+<th th:fragment="column_link(fieldName,columnLabel, removeTag)" th:remove="${removeTag}">
     <a class="text-white"
        th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortOrder} + ${keyword != null ? '&keyword='+ keyword : ''}}"
     >[[${columnLabel}]]</a>

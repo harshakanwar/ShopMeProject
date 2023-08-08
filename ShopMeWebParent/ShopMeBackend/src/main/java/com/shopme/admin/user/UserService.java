@@ -28,7 +28,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public List<User> listAll() {
-        return (List<User>) userRepository.findAll();
+        return (List<User>) userRepository.findAll(Sort.by("firstName").ascending());
     }
 
     public Page<User> listByPage(int pageNumber, String sortField, String sortDir, String keyword) {
@@ -71,10 +71,7 @@ public class UserService {
         boolean isCreatingNew = (id == null);
         if (isCreatingNew) {
             return false;
-        } else if (userByEmail.getId() != id) {
-            return false;
-        }
-        return true;
+        } else return userByEmail.getId() == id;
     }
 
     private void encodePassword(User user) {
