@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.0.6] - 8 August 2023
 
 ### Added
+* Video-54 Code Refactor #2
+
+## [0.0.6] - 8 August 2023
+
+### Added
 * Video-48 Key Notes #2
 * Completed Code User Management Module
 

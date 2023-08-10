@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String viewHomePhae() {
+    public String viewHomePage() {
         return "index";
     }
 

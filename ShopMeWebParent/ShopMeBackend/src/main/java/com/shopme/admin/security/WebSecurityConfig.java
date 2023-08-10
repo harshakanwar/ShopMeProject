@@ -1,6 +1,5 @@
 package com.shopme.admin.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,18 +34,20 @@ public class WebSecurityConfig {
 
         return authProvider;
     }
-    @Autowired
+
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> {
             try {
-                auth.requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated().and()
-                        .formLogin().loginPage("/login")
-                        .usernameParameter("email").passwordParameter("password");
+                auth.anyRequest().authenticated().and()
+                        .formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("email").permitAll()
+                        .and().logout().permitAll();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
