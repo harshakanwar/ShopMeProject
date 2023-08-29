@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new ShopmeUserDetailsService();
     }
 
@@ -27,7 +27,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -43,22 +43,27 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> {
             try {
-                auth.anyRequest().authenticated().and()
+                auth.anyRequest().authenticated()
+                        .and()
                         .formLogin()
                         .loginPage("/login")
                         .usernameParameter("email").permitAll()
-                        .and().logout().permitAll();
+                        .and()
+                        .logout().permitAll()
+                        .and()
+                        .rememberMe()
+                        .key("HarshaLovesGaje").tokenValiditySeconds(7 * 24 * 60 * 60);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }); ;
+        });
         return httpSecurity.build();
     }
 
-        @Bean
-        public WebSecurityCustomizer webSecurityCustomizer() {
-            return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
-        }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
+    }
 
 
 }

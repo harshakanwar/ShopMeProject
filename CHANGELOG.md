@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.0.6] - 8 August 2023
+## [0.0.8] - 29 August 2023
+
+### Added
+* Video-58 Module Code User Authentication
+
+## [0.0.7] - 10 August 2023
 
 ### Added
 * Video-54 Code Refactor #2

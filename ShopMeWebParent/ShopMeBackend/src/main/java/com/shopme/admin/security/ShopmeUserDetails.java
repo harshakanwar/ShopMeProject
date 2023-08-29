@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class ShopmeUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public ShopmeUserDetails(User user) {
         this.user = user;
@@ -24,7 +24,7 @@ public class ShopmeUserDetails implements UserDetails {
         Set<Role> roles = user.getRoles();
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for(Role role : roles){
+        for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;
@@ -61,6 +61,14 @@ public class ShopmeUserDetails implements UserDetails {
     }
 
     public String getFullname() {
-        return this.user.getFirstName() +" " + this.user.getLastName();
+        return this.user.getFirstName() + " " + this.user.getLastName();
+    }
+
+    public void setFirstname(String firstname) {
+        this.user.setFirstName(firstname);
+    }
+
+    public void setLastname(String lastname) {
+        this.user.setLastName(lastname);
     }
 }
