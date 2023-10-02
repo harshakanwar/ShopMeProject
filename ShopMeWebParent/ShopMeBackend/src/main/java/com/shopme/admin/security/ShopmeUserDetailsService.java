@@ -1,6 +1,6 @@
 package com.shopme.admin.security;
 
-import com.shopme.admin.user.UserRepository;
+import com.shopme.admin.repository.UserRepository;
 import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ public class ShopmeUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.getByEmail(email);
-        if(user != null) {
+        if (user != null) {
             return new ShopmeUserDetails(user);
         }
 

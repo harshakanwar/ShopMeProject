@@ -1,5 +1,7 @@
 package com.shopme.admin.user;
 
+import com.shopme.admin.repository.RoleRepository;
+import com.shopme.admin.repository.UserRepository;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import jakarta.transaction.Transactional;
@@ -66,7 +68,7 @@ public class UserService {
     public User updateAccount(User userInForm) {
         User userInDB = userRepository.findById(userInForm.getId()).get();
 
-        if (!userInDB.getPassword().isEmpty()) {
+        if (!userInForm.getPassword().isEmpty()) {
             userInDB.setPassword(userInForm.getPassword());
             encodePassword(userInDB);
         }

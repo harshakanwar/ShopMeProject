@@ -3,9 +3,12 @@
 <head th:replace="~{fragments :: page_head('Home - ShopMe Admin')}"></head>
 <body>
 <div class="container-fluid">
-        <div th:replace="~{navigation :: menu}"></div>
+    <div th:replace="~{navigation :: menu}"></div>
     <div>
-        <h1>ShopMe Control Panel</h1>
+        <h2>ShopMe Control Panel</h2>
+        Welcome
+        <a th:href="@{/account}" sec:authentication="principal.fullname"></a>
+        <span sec:authentication="principal.authorities"></span>
     </div>
 
     <div th:replace="~{fragments :: footer}"></div>
