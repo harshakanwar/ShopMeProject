@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymleaf.org">
-<head th:replace="~{fragments :: page_head('Users - ShopMe Admin')}"></head>
+<head th:replace="~{fragments :: page_head('Categories - ShopMe Admin')}"></head>
 <body>
 <div class="container-fluid">
     <div>
         <div th:replace="~{navigation :: menu}"></div>
     </div>
     <div>
-        <h2>Manage Users</h2>
-        <a th:href="@{/users/new}" class="fas fa-user-plus fa-2x icon-blue mr-2"></a>
-        <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-blue mr-2"></a>
-        <a th:href="@{/users/export/excel}" class="fas fa-file-excel fa-2x icon-blue mr-2"></a>
-        <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-blue mr-2"></a>
+        <h2>Manage Categories</h2>
+        <a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-blue mr-2"></a>
+        <a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-blue mr-2"></a>
+
     </div>
 
     <div th:if="${message != null}" class="alert alert-success text-center">
@@ -19,10 +18,10 @@
     </div>
 
     <div>
-        <form th:action="@{/users/page/1}" class="form-inline m-3">
-            <input type="hidden" name="sortField" th:value="${sortField}"/>
-            <input type="hidden" name="sortDir" th:value="${sortDir}"/>
-            Filter:&nbsp;
+        <form th:action="@{/categories/page/1}" class="form-inline m-3">
+            <!--      <input type="hidden" name="sortField" th:value="${sortField}"/>
+                  <input type="hidden" name="sortDir" th:value="${sortDir}"/>-->
+            Filter:&nbsp;&nbsp;
             <input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
             &nbsp;&nbsp;
             <button type="submit" class="btn btn-primary">
@@ -35,47 +34,47 @@
         </form>
     </div>
 
-    <div class="Full-details">
+    <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
             <thead class="thead-dark">
             <tr>
                 <th class="hideable-column">
-                <th th:replace="~{fragments :: column_link('id', 'User Id', 'tag')}"></th>
+                <th th:replace="~{fragments :: column_link('id', 'Id', 'tag')}"></th>
                 <th>Photos</th>
                 <th class="hideable-column">
-                <th th:replace="~{fragments :: column_link('email', 'E-mail', 'tag')}"></th>
+                <th th:replace="~{fragments :: column_link('email', 'Category', 'tag')}"></th>
                 </th>
-                <th th:replace="~{fragments :: column_link('firstName', 'First Name', 'none')}"></th>
-                <th th:replace="~{fragments :: column_link('lastName', 'Last Name', 'none')}"></th>
-                <th>Roles</th>
+                <th th:replace="~{fragments :: column_link('firstName', 'Alias', 'none')}"></th>
                 <th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${listUsers}">
-                <td class="hideable-column">[[${user.id}]]</td>
+            <tr th:each="category : ${listCategories}">
+                <td class="hideable-column">[[${category.id}]]</td>
+                <td>[[${category.image}]]</td>
+                <!--       <td>
+                         <span th:if="${category.image == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                         <img th:if="${category.image != null}" th:src="@{${category.photosImagePath}}"
+                              style="width: 100px">
+                       </td>-->
+                <td class="hideable-column">[[${category.name}]]</td>
+                <td>[[${category.alias}]]</td>
+
                 <td>
-                    <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                    <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-                         style="width: 100px">
+                    <a th:if="${category.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+                       th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
+                       title="Disable this Category"></a>
+                    <a th:if="${category.enabled == false}" class="fas fa-circle fa-2x icon-dark"
+                       th:href="@{'/categories/' + ${category.id} + '/enabled/true'}" title="Enable this Category"></a>
                 </td>
-                <td class="hideable-column">[[${user.email}]]</td>
-                <td>[[${user.firstName}]]</td>
-                <td>[[${user.lastName}]]</td>
-                <td>[[${user.roles}]]</td>
                 <td>
-                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this User"></a>
-                    <a th:if="${user.enabled == false}" class="fas fa-circle fa-2x icon-dark"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this User"></a>
-                </td>
-                <td>
-                    <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"
-                       title="Edit This User"></a>
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${category.id}}"
+                       title="Edit This Category"></a>
                     &nbsp;
-                    <a class="fas fa-trash fa-2x icon-dark link-delete" th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userId="${user.id}"></a>
+                    <a class="fas fa-trash fa-2x icon-dark link-delete"
+                       th:href="@{'/categories/delete/' + ${category.id}}"
+                       th:userId="${category.id}"></a>
                 </td>
             </tr>
             </tbody>
@@ -83,26 +82,28 @@
     </div>
 
     <div class="Less-details">
-        <div th:each="user : ${listUsers}" class="row m-1">
-            <div class="col-4">
-                <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-                     style="width: 100px">
-            </div>
+        <div th:each="category : ${listCategories}" class="row m-1">
+            <!--      <div class="col-4">
+                    <span th:if="${category.image == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                    <img th:if="${category.image != null}" th:src="@{${category.photosImagePath}}"
+                         style="width: 100px">
+                  </div>-->
             <div class="col-8">
-                <div>[[${user.fullName}]]</div>
-                <div>[[${user.roles}]]</div>
+                <div>[[${category.name}]]</div>
+                <div>[[${category.alias}]]</div>
                 <div class="mt-2">
-                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this User"></a>
-                    <a th:if="${user.enabled == false}" class="fas fa-circle fa-2x icon-dark"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this User"></a>
+                    <a th:if="${category.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+                       th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
+                       title="Disable this Category"></a>
+                    <a th:if="${category.enabled == false}" class="fas fa-circle fa-2x icon-dark"
+                       th:href="@{'/categories/' + ${category.id} + '/enabled/true'}" title="Enable this Category"></a>
                     &nbsp;
-                    <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"
-                       title="Edit This User"></a>
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${category.id}}"
+                       title="Edit This Category"></a>
                     &nbsp;&nbsp;
-                    <a class="fas fa-trash fa-2x icon-dark link-delete" th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userId="${user.id}"></a>
+                    <a class="fas fa-trash fa-2x icon-dark link-delete"
+                       th:href="@{'/categories/delete/' + ${category.id}}"
+                       th:userId="${category.id}"></a>
                 </div>
             </div>
 
