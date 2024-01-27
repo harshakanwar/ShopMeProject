@@ -44,7 +44,7 @@ public class CategoryController {
         category.setImage(fileName);
 
         Category savedCategory = service.save(category);
-        String uploadDir = "category-images/" + savedCategory.getId();
+        String uploadDir = "/Udemy Learnings/ShopMeProject/ShopMeWebParent/ShopMeBackend/category-images/" + savedCategory.getId();
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
         ra.addFlashAttribute("message", "The category has been saved successfully.");

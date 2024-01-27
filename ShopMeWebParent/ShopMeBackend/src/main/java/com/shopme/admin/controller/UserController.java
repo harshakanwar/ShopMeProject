@@ -85,7 +85,7 @@ public class UserController {
             user.setPhotos(fileName);
             User savedUser = userService.save(user);
 
-            String uploadDir = "user-photos/" + savedUser.getId();
+            String uploadDir = "/Udemy Learnings/ShopMeProject/ShopMeWebParent/ShopMeBackend/user-photos/" + savedUser.getId();
 
             FileUploadUtil.clearDir(uploadDir);
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);

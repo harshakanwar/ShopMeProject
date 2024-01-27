@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
 import java.util.Set;
 
 @DataJpaTest(showSql = false)
@@ -79,4 +80,10 @@ public class CategoryRepositoryTests {
         }
     }
 
+    @Test
+    public void testRootCategories() {
+        List<Category> rootCategories = categoryRepository.findRootCategories();
+        rootCategories.forEach(t ->
+                System.out.println(t.getName()));
+    }
 }

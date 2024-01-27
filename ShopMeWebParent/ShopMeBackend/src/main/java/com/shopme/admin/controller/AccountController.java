@@ -43,7 +43,7 @@ public class AccountController {
             user.setPhotos(fileName);
             User savedUser = userService.updateAccount(user);
 
-            String uploadDir = "user-photos/" + savedUser.getId();
+            String uploadDir = "/Udemy Learnings/ShopMeProject/ShopMeWebParent/ShopMeBackend/user-photos/" + savedUser.getId();
 
             FileUploadUtil.clearDir(uploadDir);
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);

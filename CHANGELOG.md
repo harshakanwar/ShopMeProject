@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.1] - 27 January 2024
+
+### Added
+
+* Fixed Images Path issue
+
 ## [0.1.0] - 13 October 2023
 
 ### Added
