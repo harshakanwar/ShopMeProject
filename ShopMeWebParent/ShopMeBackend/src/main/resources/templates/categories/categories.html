@@ -52,14 +52,14 @@
             <tbody>
             <tr th:each="category : ${listCategories}">
                 <td class="hideable-column">[[${category.id}]]</td>
+                <!--                <td>
+                                    <img th:src="@{${category.image}}"/>
+                                </td>-->
                 <td>
-                    <img th:src="@{${category.image}}"/>
+                    <span th:if="${category.image == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                    <img th:if="${category.image != null}" th:src="@{${category.imagePath}}"
+                         style="width: 100px">
                 </td>
-                <!--       <td>
-                         <span th:if="${category.image == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                         <img th:if="${category.image != null}" th:src="@{${category.photosImagePath}}"
-                              style="width: 100px">
-                       </td>-->
                 <td class="hideable-column">[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
 
@@ -181,6 +181,7 @@
      function clearFilter(){
          window.location = "[[@{/users}]]" ;
      }
+
 
 
 

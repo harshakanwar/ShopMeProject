@@ -84,6 +84,6 @@ public class Category {
 
     @Transient
     public String getImagePath() {
-        return "/category-images/" + this.id + "/" + this.image;
+        return "/Udemy Learnings/ShopMeProject/ShopMeWebParent/ShopMeBackend/category-images/" + this.id + "/" + this.image;
     }
 }

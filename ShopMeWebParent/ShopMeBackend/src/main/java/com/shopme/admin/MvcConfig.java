@@ -1,5 +1,6 @@
 package com.shopme.admin;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -7,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Slf4j
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
     @Override
@@ -25,7 +27,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
         String categoryImagesPath = categoryImagesDir.toFile().getAbsolutePath();
 
-        registry.addResourceHandler("/category-images/**" + categoryImagesDirName + "/**")
+        log.info("/" + categoryImagesDirName + "/**");
+        log.info("file:/" + categoryImagesPath + "/");
+
+        registry.addResourceHandler("/" + categoryImagesDirName + "/**")
                 .addResourceLocations("file:/" + categoryImagesPath + "/");
     }
 }
