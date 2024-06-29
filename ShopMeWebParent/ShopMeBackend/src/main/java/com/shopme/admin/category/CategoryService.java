@@ -99,6 +99,7 @@ public class CategoryService {
 
     public String checkUnique(Integer id, String name, String alias) {
         boolean isCreatingNew = (id == null || id == 0);
+
         Category categoryByName = categoryRepository.findByName(name);
 
         if (isCreatingNew) {
@@ -110,16 +111,18 @@ public class CategoryService {
                     return "DuplicateAlias";
                 }
             }
-
         } else {
-            if (categoryByName != null && !Objects.equals(categoryByName.getId(), id)) {
+            if (categoryByName != null && categoryByName.getId() != id) {
                 return "DuplicateName";
             }
+
             Category categoryByAlias = categoryRepository.findByAlias(alias);
-            if (categoryByAlias != null && !Objects.equals(categoryByAlias.getId(), id)) {
+            if (categoryByAlias != null && categoryByAlias.getId() != id) {
                 return "DuplicateAlias";
             }
+
         }
+
         return "OK";
     }
 }

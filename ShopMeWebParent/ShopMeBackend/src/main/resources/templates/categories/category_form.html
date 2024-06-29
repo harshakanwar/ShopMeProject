@@ -49,12 +49,13 @@
                 <label class="col-sm-4 col-form-label">Image:</label>
                 <div class="col-sm-8">
                     <input type="hidden" th:field="*{image}"/>
-                    <input type="file" id="fileImage" name="fileImage" accept="image/png image/jpeg" required
+                    <input type="file" id="fileImage" name="fileImage" accept="image/png image/jpeg"
+                           th:required="${category.imagePath == null}"
                            class="mb-2"/>
 
                     <div class="mt-2">
                         <img id="thumbnail" alt="Image preview"
-                             th:src="@{/images/image-thumbnail.png}" class="img-fluid"/>
+                             th:src="@{${category.imagePath}}" class="img-fluid"/>
                     </div>
                 </div>
             </div>
@@ -77,7 +78,7 @@
     <!--
         <div th:replace="modal_fragments :: modal_dialog"></div>
     -->
-
+    <div th:replace="~{modal_fragments :: modal_dialog}"></div>
     <div th:replace="fragments :: footer"></div>
 
 </div>
@@ -85,6 +86,33 @@
 moduleURL = "[[@{/categories}]]";
 
 
+     function checkUnique(form){
+
+         catId = $("#id").val();
+         catName = $("#name").val();
+         catAlias = $("#alias").val();
+         csrfValue = $("input[name='_csrf']").val();
+
+         url = "[[@{/categories/check_unique}]]"
+
+         params = { id: catId, name: catName, alias: catAlias, _csrf : csrfValue }
+
+         $.post(url,params, function(response) {
+        if(response == "OK")
+        { form.submit();}
+          else if (response == "DuplicateName"){
+            showWarningModal("There is another category with name " + catName);
+            }
+          else if (response == "DuplicateAlias"){
+            showWarningModal("There is another category with alias " + catAlias);
+            }
+          else { showErrorModal("Unknown response from server" );}
+        }).fail( function(){
+             showErrorModal("Could not connect to the server" );
+        });
+
+         return false;
+     }
 
 
 
