@@ -41,8 +41,8 @@
                 <th class="hideable-column">
                 <th th:replace="~{fragments :: column_link('id', 'Id', 'tag')}"></th>
                 <th>Photos</th>
-                <th class="hideable-column">
-                <th th:replace="~{fragments :: column_link('email', 'Category', 'tag')}"></th>
+                <th><a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
+                <span th:class="${reverseSortDir =='desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
                 <th th:replace="~{fragments :: column_link('firstName', 'Alias', 'none')}"></th>
                 <th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
@@ -108,65 +108,20 @@
                        th:userId="${category.id}"></a>
                 </div>
             </div>
-
-            <div>&nbsp;</div>
         </div>
     </div>
 
-    <div class="text-center m-1" th:if="${totalItems > 0}">
-        <span>Showing Users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
-    </div>
-    <div class="text-center m-1" th:unless="${totalItems > 0}">
-        <span>No Users Found</span>
-    </div>
 
-    <div th:if="${totalPages > 1}">
-        <nav>
-            <ul class="pagination justify-content-center flex-wrap">
-                <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a th:replace="~{fragments :: page_link(1, 'First' )}"></a>
-                </li>
-                <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a th:replace="~{fragments :: page_link(${currentPage - 1}, 'Previous' )}"></a>
-                </li>
+    <div th:replace="~{fragments :: pagination('/categories', 'Top-Level Categories')}"></div>
 
-                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
-                    th:each=" i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:replace="~{fragments :: page_link(${i}, ${i} )}"></a>
-                </li>
-
-                <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a th:replace="~{fragments :: page_link(${currentPage + 1}, 'Next' )}"></a>
-                </li>
-                <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a th:replace="~{fragments :: page_link(${totalPages}, 'Last' )}"></a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="modal fade text-center" id="confirmModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Confirmation</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <span id="confirmText"></span>
-                </div>
-
-                <div class="modal-footer">
-                    <a class="btn btn-success" href="" id="yesButton">Yes</a>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="~{modal_fragments :: confirm_modal}" ></div>
 
     <div th:replace="~{fragments :: footer}"></div>
 </div>
+
 <script type="text/javascript">
+      moduleURL = "[[@{/categories}]]";
+
       $(document).ready(function(){
         $(".link-delete").on("click", function(e){
         e.preventDefault();
