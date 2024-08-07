@@ -1,7 +1,6 @@
 package com.shopme.admin.category;
 
 import com.shopme.admin.FileUploadUtil;
-import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.common.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -26,20 +25,20 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String listFirstPage(@Param("sortDir") String sortDir, Model model) {
-        return listByPage(1,sortDir,null, model);
+        return listByPage(1, sortDir, null, model);
     }
 
     @GetMapping("/categories/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNum,
-                             String sortDir,	String keyword,	Model model) {
-        if (sortDir ==  null || sortDir.isEmpty()) {
+                             String sortDir, String keyword, Model model) {
+        if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }
 
         CategoryPageInfo pageInfo = new CategoryPageInfo();
         List<Category> listCategories = service.listByPage(pageInfo, pageNum, sortDir, keyword);
 
-        long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+        long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
         long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
         if (endCount > pageInfo.getTotalElements()) {
             endCount = pageInfo.getTotalElements();
@@ -62,6 +61,7 @@ public class CategoryController {
 
         return "categories/categories";
     }
+
     @GetMapping("/categories/new")
     public String newCategory(Model model) {
         List<Category> listCategories = service.listCategoriesUsedInForm();
@@ -74,14 +74,14 @@ public class CategoryController {
     @PostMapping("/categories/save")
     public String saveCategory(Category category, @RequestParam("fileImage") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
 
-        if(!multipartFile.isEmpty()) {
+        if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             category.setImage(fileName);
 
             Category savedCategory = service.save(category);
             String uploadDir = "/Udemy Learnings/ShopMeProject/ShopMeWebParent/ShopMeBackend/category-images/" + savedCategory.getId();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        }else {
+        } else {
             service.save(category);
         }
         ra.addFlashAttribute("message", "The category has been saved successfully.");
@@ -99,7 +99,7 @@ public class CategoryController {
             model.addAttribute("pageTitle", "Edit Category (ID : " + id + ")");
             return "categories/category_form";
 
-        }catch (CategoryNotFoundException ex){
+        } catch (CategoryNotFoundException ex) {
             ra.addFlashAttribute("message", ex.getMessage());
             return "redirect:/categories";
         }

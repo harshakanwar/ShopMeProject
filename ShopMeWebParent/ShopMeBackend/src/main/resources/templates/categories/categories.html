@@ -41,8 +41,9 @@
                 <th class="hideable-column">
                 <th th:replace="~{fragments :: column_link('id', 'Id', 'tag')}"></th>
                 <th>Photos</th>
-                <th><a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
-                <span th:class="${reverseSortDir =='desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                <th><a class="text-white"
+                       th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
+                    <span th:class="${reverseSortDir =='desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
                 <th th:replace="~{fragments :: column_link('firstName', 'Alias', 'none')}"></th>
                 <th th:replace="~{fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
@@ -114,7 +115,7 @@
 
     <div th:replace="~{fragments :: pagination('/categories', 'Top-Level Categories')}"></div>
 
-    <div th:replace="~{modal_fragments :: confirm_modal}" ></div>
+    <div th:replace="~{modal_fragments :: confirm_modal}"></div>
 
     <div th:replace="~{fragments :: footer}"></div>
 </div>
@@ -136,6 +137,7 @@
      function clearFilter(){
          window.location = "[[@{/users}]]" ;
      }
+
 
 
 

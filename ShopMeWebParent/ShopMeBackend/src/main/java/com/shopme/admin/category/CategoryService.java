@@ -89,7 +89,7 @@ public class CategoryService {
 
     public List<Category> listCategoriesUsedInForm() {
         List<Category> categoriesUsedInForm = new ArrayList<>();
-        Iterable<Category> categoriesInDB = categoryRepository.findRootCategories(Sort.by("name").ascending());;
+        Iterable<Category> categoriesInDB = categoryRepository.findRootCategories(Sort.by("name").ascending());
 
         for (Category category : categoriesInDB) {
             if (category.getParent() == null) {
@@ -165,9 +165,11 @@ public class CategoryService {
 
         return "OK";
     }
-    private SortedSet<Category> sortSubCategories(Set<Category> children){
+
+    private SortedSet<Category> sortSubCategories(Set<Category> children) {
         return sortSubCategories(children, "asc");
     }
+
     private SortedSet<Category> sortSubCategories(Set<Category> children, String sortDir) {
         SortedSet<Category> sortedChildren = new TreeSet<>((cat1, cat2) -> {
             if (sortDir.equals("asc")) {

@@ -112,7 +112,7 @@
 
     <div th:replace="~{fragments :: pagination('/users', 'Users')}"></div>
 
-    <div th:replace="~{modal_fragments :: confirm_modal}" ></div>
+    <div th:replace="~{modal_fragments :: confirm_modal}"></div>
 
     <div th:replace="~{fragments :: footer}"></div>
 </div>
@@ -134,6 +134,7 @@
      function clearFilter(){
          window.location = "[[@{/users}]]" ;
      }
+
 
 
 
